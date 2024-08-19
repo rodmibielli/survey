@@ -1,0 +1,9 @@
+services:
+  survey_application:
+    container_name: survey_application
+    image: survey:0.0.1-SNAPSHOT
+    environment:
+     - "PORT=${PORT}"
+     - TZ=America/Sao_Paulo
+    ports:
+     - "${PORT}"

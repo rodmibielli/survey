@@ -1,0 +1,19 @@
+---
+spring:
+  devtools:
+    remote:
+      secret: mysecret
+  jpa:
+    hibernate:
+      ddl-auto: create # validate | update | create | create-drop
+    show-sql: true
+    open-in-view: false
+  datasource:
+    url: jdbc:h2:mem:${DB_NAME:mydb}
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  application:
+    name: ${NAME:survey}
+server:
+  port: ${PORT:8080}
