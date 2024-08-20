@@ -1,20 +1,16 @@
 ---
 spring:
-  devtools:
-    remote:
-      secret: mysecret
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: "update # validate | update | create | create-drop"
+      ddl-auto: create
     show-sql: false
     open-in-view: false
   datasource:
-    url: "jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${DB_NAME:mydb}"
+    url: "jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${DB_NAME:survey}"
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: "${MYSQL_USERNAME:root}"
     password: "${MYSQL_PASSWORD:}"
-  h2: {}
   application:
     name: "${NAME:survey}"
 server:

@@ -1,9 +1,11 @@
 # survey
 ```mermaid
+
 classDiagram
  
  class Contact {
-   
+   -String name
+   -String email
  }
  
  class Survey {
@@ -11,16 +13,23 @@ classDiagram
     -String title
  }
 
- note for Question "Response Type: Text,Response Set,Date, Numeric"
  class Question {
     -UUID id
     -String text
-    -String responseType
+    -ResponseType responseType
  }
 
- note for SurveyQuestion "Sequence"
+ class ResponseType {
+    <<Enumeration>>
+    TEXT
+    DATE
+    INTEGER
+    REAL 
+    BOOLEAN 
+ }
+ 
  class SurveyQuestion {
-    
+   -Integer sequence 
  }
  
 
@@ -38,6 +47,12 @@ classDiagram
  }
 
  class SurveyResponseQuestion {
+    -String responseText
+    -Date responseDate
+    -Long responseInteger
+    -Double responseReal
+    -Boolean responseBoolean
+    +Object getResponse()
  }
  
  Contact "1"--"*" SurveyResponse
@@ -50,5 +65,6 @@ classDiagram
  ResponseSet "1"--"*" ResponseValue
 
  ResponseSet "1"--"*" Question
- 
+ Question..>ResponseType
+  
 ```

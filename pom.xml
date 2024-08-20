@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rodmibielli.dio</groupId>
 	<artifactId>survey</artifactId>
@@ -14,10 +15,9 @@
 	<name>Survey</name>
 	<description>Survey RESTful Operations</description>
 	<properties>
-		<docker.plugin.version>0.44.0</docker.plugin.version>
 		<jackson-databind-nullable-version>0.2.1</jackson-databind-nullable-version>
-		<swagger2-springfox-version>2.9.2</swagger2-springfox-version>
-		<java.version>17</java.version>
+		<orika-spring-boot-starter.version>3.3.2</orika-spring-boot-starter.version>
+		<springdoc-openapi-starter-webmvc-ui.version>2.6.0</springdoc-openapi-starter-webmvc-ui.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -28,25 +28,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<!--
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-springdoc-openapi</artifactId>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
 		</dependency>
-		-->
+		<dependency>
+			<groupId>dev.akkinoc.spring.boot</groupId>
+			<artifactId>orika-spring-boot-starter</artifactId>
+			<version>${orika-spring-boot-starter.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${swagger2-springfox-version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.openapitools</groupId>
 			<artifactId>jackson-databind-nullable</artifactId>
-			<version>0.2.1</version>
+			<version>${jackson-databind-nullable-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.yaml</groupId>
@@ -91,19 +90,14 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>${docker.plugin.version}</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<images>
-						<image>
-							<external>
-								<type>compose</type>
-								<basedir>src/main/docker</basedir>
-								<composeFile>docker-compose.yml</composeFile>
-							</external>
-						</image>
-					</images>
+					<source>17</source>
+					<target>17</target>
+					<compilerArgs>
+						<arg>--add-opens java.base/java.lang=ALL-UNNAMED</arg>
+					</compilerArgs>
 				</configuration>
 			</plugin>
 		</plugins>
