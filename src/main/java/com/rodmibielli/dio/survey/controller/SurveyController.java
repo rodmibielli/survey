@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.rodmibielli.dio.survey.dto.SurveyDTO;
+import com.rodmibielli.dio.survey.dto.SurveyToCreateDTO;
+import com.rodmibielli.dio.survey.mapping.SurveyMapper;
 import com.rodmibielli.dio.survey.model.Survey;
 import com.rodmibielli.dio.survey.service.SurveyService;
 
 import lombok.RequiredArgsConstructor;
-import ma.glasnost.orika.MapperFacade;
 
 @RestController
 @RequestMapping("/surveys")
@@ -26,18 +27,18 @@ public class SurveyController {
 
 	private final SurveyService surveyService;
 	
-	private final MapperFacade orikaMapperFacade;
+	private final SurveyMapper surveyMapper;
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<SurveyDTO> findById(@PathVariable UUID id) {
 		var survey = surveyService.findById(id);
-		var surveyDTO = orikaMapperFacade.map(survey, SurveyDTO.class);
+		var surveyDTO = surveyMapper.toDTO(survey);
 		return ResponseEntity.ok(surveyDTO);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Survey> create(@RequestBody SurveyDTO surveyDTO) {
-		var surveyToCreate = this.orikaMapperFacade.map(surveyDTO, Survey.class);
+	public ResponseEntity<Survey> create(@RequestBody SurveyToCreateDTO surveyToCreateDTO) {
+		var surveyToCreate = surveyMapper.toSurvey(surveyToCreateDTO);
 		surveyService.createSurvey(surveyToCreate);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 												  .path("/{id}")
